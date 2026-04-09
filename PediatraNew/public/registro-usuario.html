@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro - Pediatría Integral Satélite</title>
+    <link rel="stylesheet" href="registro-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+
+    <div class="container">
+        <div class="image-section">
+            <div class="image-overlay">
+                <h2>Únete a nuestra familia</h2>
+                <p>Registra a tu hijo y accede a todos nuestros servicios médicos en línea.</p>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h2>Registro de Usuario</h2>
+            <p class="subtitle">Completa los datos para crear tu cuenta</p>
+            
+            <form id="registroForm">
+                
+                <div class="form-group-title">Datos del Tutor</div>
+                
+                <div class="input-group">
+                    <label>Nombre completo *</label>
+                    <input type="text" name="nombreTutor" required>
+                </div>
+
+                <div class="input-row">
+                    <div class="input-group">
+                        <label>Correo electrónico *</label>
+                        <input type="email" name="email" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Teléfono *</label>
+                        <input type="tel" name="telefono" required>
+                    </div>
+                </div>
+
+                <div class="input-row">
+                    <div class="input-group">
+                        <label>Contraseña *</label>
+                        <input type="password" name="password" required minlength="6">
+                    </div>
+
+                    <div class="input-group">
+                        <label>Confirmar contraseña *</label>
+                        <input type="password" name="confirmPassword" required>
+                    </div>
+                </div>
+
+                <div class="form-group-title">Datos del Paciente</div>
+                
+                <div class="input-group">
+                    <label>Nombre del niño/a *</label>
+                    <input type="text" name="nombrePaciente" required>
+                </div>
+
+                <div class="input-row">
+                    <div class="input-group">
+                        <label>Fecha de nacimiento *</label>
+                        <input type="date" name="fechaNacimiento" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Género *</label>
+                        <select name="genero" required>
+                            <option value="">Seleccionar...</option>
+                            <option value="Masculino">Masculino</option>
+                            <option value="Femenino">Femenino</option>
+                            <option value="Otro">Otro</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-login">Registrarse</button>
+
+                <div class="footer-text">
+                    <a href="iniciasesion.php">¿Ya tienes cuenta? Inicia sesión</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('registroForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            
+            fetch('../api/registro-usuario.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: '¡Registro Exitoso!',
+                        text: 'Ahora puedes iniciar sesión con tu cuenta',
+                        confirmButtonColor: '#667eea',
+                        confirmButtonText: 'Ir a Iniciar Sesión'
+                    }).then(() => {
+                        window.location.href = 'iniciasesion.php';
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: data.message || 'Error al registrar',
+                        confirmButtonColor: '#667eea'
+                    });
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error de Conexión',
+                    text: 'No se pudo conectar con el servidor',
+                    confirmButtonColor: '#667eea'
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Doctor - Pediatría Integral Satélite</title>
+    <link rel="stylesheet" href="registro-styles.css">
+</head>
+<body>
+
+    <div class="container">
+        <div class="image-section">
+            <div class="image-overlay">
+                <h2>Acceso Médico</h2>
+                <p>Área exclusiva para personal médico autorizado.</p>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h2>Login de Doctor</h2>
+            
+            <!-- Formulario tradicional: action y method -->
+            <form action="../api/login-doctor.php" method="POST">
+                
+                <div class="input-group">
+                    <label>Correo institucional</label>
+                    <input type="email" name="email" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Contraseña</label>
+                    <input type="password" name="password" required>
+                </div>
+
+                <button type="submit" class="btn-login">Ingresar</button>
+
+                <div class="footer-text">
+                    <a href="registro-doctor.html">Registro de doctor</a>
+                </div>
+                
+                <div class="footer-text">
+                    <a href="iniciasesion.php">Volver a usuario</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>
